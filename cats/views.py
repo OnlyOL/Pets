@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
+from .models import Cat
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .serializers import UserSerializer, GroupSerializer, CatSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,3 +20,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+class CatViewSet(viewsets.ModelViewSet):
+    queryset = Cat.objects.all()
+    serializer_class = CatSerializer
+    permission_classes = [permissions.IsAuthenticated]
