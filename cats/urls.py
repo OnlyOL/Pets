@@ -12,6 +12,6 @@ urlpatterns = [
     path('create/', add_cat, name='add-cats'),
     path('all/', view_cats, name='view_cats'),
     path('update/<int:pk>/', update_cat, name='update-cats'),
-    path('item/<int:pk>/delete/', delete_cat, name='delete-cats'),
+    path('cat/<int:pk>/delete/', delete_cat, name='delete-cats'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
