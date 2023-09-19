@@ -9,9 +9,9 @@ router.register(r'cats', CatViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('create/', add_cat, name='add-items'),
-    path('all/', view_cats, name='view_items'),
-    path('update/<int:pk>/', update_cat, name='update-items'),
-    path('item/<int:pk>/delete/', delete_cat, name='delete-items'),
+    path('create/', add_cat, name='add-cats'),
+    path('all/', view_cats, name='view_cats'),
+    path('update/<int:pk>/', update_cat, name='update-cats'),
+    path('item/<int:pk>/delete/', delete_cat, name='delete-cats'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
