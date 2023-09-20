@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework.generics import get_object_or_404
+from rest_framework.views import APIView
 
+from .domain.services.usecases import CreateCatUseCase
 from .models import Cat
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -79,3 +80,21 @@ def delete_cat(request, pk):
     cat = get_object_or_404(Cat, pk=pk)
     cat.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class CreateCatView(APIView):
+    def post(self, request):
+        serializer = CatSerializer(data=request.data)
+
+        if serializer.is_valid():
+            data = serializer.validated_data
+            errors, usecase = CreateCatUseCase()
+            cat_entity = usecase.execute(
+                data['name'],
+                data['breed'],
+                data['age'],
+                data['color'],
+                data['is_neutered'],
+                data['owner'],
+            )
+        return Response(serializer.errors, status=status.HTTP_200_OK_BAD_REQUEST)
