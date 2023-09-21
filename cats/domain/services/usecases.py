@@ -8,7 +8,6 @@ class CreateCatUseCase:
 
     def execute(
             self,
-            cat_id: int,
             name: str,
             breed: str,
             age: int,
@@ -16,8 +15,8 @@ class CreateCatUseCase:
             is_neutered: bool,
             owner: int,
     ):
+        errors = []
         cat = self.cat_service.create_cat(
-            cat_id,
             name,
             breed,
             age,
@@ -25,4 +24,19 @@ class CreateCatUseCase:
             is_neutered,
             owner,
         )
+        return cat
+
+
+class UpdateCatUseCase:
+    def __int__(self):
+        self.cat_service = CatsService()
+
+    def execute(self, cat):
+        return cat
+
+class DeleteCatUseCase:
+    def __int__(self):
+        self.cat_service = CatsService()
+
+    def execute(self, cat):
         return cat

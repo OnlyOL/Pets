@@ -7,7 +7,6 @@ class CatsDAO:
     @classmethod
     def create_cat(
             cls,
-            cat_id: int,
             name: str,
             breed: str,
             age: int,
@@ -17,7 +16,6 @@ class CatsDAO:
 
     ):
         cat = Cat.objects.create(
-            cat_id=cat_id,
             name=name,
             breed=breed,
             age=age,

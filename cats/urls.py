@@ -10,6 +10,7 @@ router.register(r'cats', CatViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('create/', add_cat, name='add-cats'),
+    path('ccreate/', CreateCatView.as_view(), name='add-ccats'),
     path('all/', view_cats, name='view_cats'),
     path('update/<int:pk>/', update_cat, name='update-cats'),
     path('cat/<int:pk>/delete/', delete_cat, name='delete-cats'),

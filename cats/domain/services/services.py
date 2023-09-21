@@ -8,7 +8,6 @@ class CatsService:
 
     def create_cat(
             self,
-            cat_id: int,
             name: str,
             breed: str,
             age: int,
@@ -17,7 +16,6 @@ class CatsService:
             owner: int,
     ):
         return self.cat_dao.create_cat(
-            cat_id,
             name,
             breed,
             age,
