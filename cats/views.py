@@ -1,7 +1,9 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework.generics import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from .domain.services.usecases import CreateCatUseCase
 from .models import Cat
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -79,3 +81,33 @@ def delete_cat(request, pk):
     cat = get_object_or_404(Cat, pk=pk)
     cat.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
+
+
+# noinspection PyArgumentList
+class CreateCatView(APIView):
+    def post(self, request):
+        serializer = CatSerializer(data=request.data)
+
+        if serializer.is_valid():
+            data = serializer.validated_data
+            usecase = CreateCatUseCase()
+            cat_entity = usecase.execute(
+                data['name'],
+                data['breed'],
+                data['age'],
+                data['color'],
+                data['is_neutered'],
+                data['owner'],
+            )
+        return Response(serializer.errors, status=status.HTTP_200_OK)
+class UpdateCatView(APIView):
+    authentication_classes = [JWTAuthentication]
+    def post(self, request):
+        serializer = CatSerializer(data=request.data)
+        return Response(serializer.errors, status=status.HTTP_200_OK)
+
+class DeleteCatView(APIView):
+    authentication_classes = [JWTAuthentication]
+    def DELETE(self, request):
+        serializer = CatSerializer(data=request.data)
+        return Response(serializer.errors, status=status.HTTP_200_OK)
